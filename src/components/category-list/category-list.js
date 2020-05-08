@@ -43,23 +43,29 @@ export default class CategoryList extends Component{
             );
         });  
         return (
-        
-        <ul className = "list-group ">
-         <div>
-         <h3>Categories</h3>
-             <input placeholder = "find a category"
-                    value = {term}
-                    onChange = {this.onInputChange} />
-                    
-             </div>
-         
-       {elements}
-       </ul>
-           
-
+            <div className="limiter">
+                <div className="container-table100">
+                    <div className="wrap-table100">
+                        <div className="table100 ver1 m-b-110">	
+                             <table data-vertable="ver1">
+                                        <thead>
+                                            <tr className="row100 head">
+                                                <th className="column100 column1" data-column="column1">Name and Expirations</th>
+                                            </tr>
+                                        </thead>
+                                            <input placeholder = "Search"
+                                                    className="form-control"
+                                                    value = {term}
+                                                    onChange = {this.onInputChange} />                                           
+                                        <tbody>                                        
+                                            {elements}                                          
+                                        </tbody>
+                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>  
      );
     }
-    
-
 }
 
