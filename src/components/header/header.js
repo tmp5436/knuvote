@@ -25,27 +25,41 @@ const Header = () => {
     localStorage.setItem('isLogin',false);
     setIsLogin(false);
   };
-
+    
   return(
-    <div className = 'header d-flex'>
-      <h3>
-        <Link to ="/">
-          {'KNU Vote'}
-          </Link>
-      </h3>
-      <ul className ="d-flex">
-        {Object.entries(LINKS).map(([path,text])=>
-        (
-          <li className = {isLogin? 'hidden':''}>
-            <Link to={path}>{text}</Link>
-          </li>
-        ))}
-        <li className = {isLogin? '':'hidden'}>
-          <Link to ="/logout"
-          onClick={onClickLabel} >Log out</Link>
-        </li>
-        </ul>
-    </div>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="/">
+            KNUVote
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                
+              <li class="nav-item active">
+                <a class="nav-link" href="/category-list"><Link to="/category-list">Votings</Link> <span class="sr-only">(current)</span></a>
+              </li>
+    
+              <li class="nav-item active">
+                <a class="nav-link" href="/create-category">Create a categoty <span class="sr-only">(current)</span></a>
+              </li>
+              
+                
+                    {Object.entries(LINKS).map(([path,text])=>
+                    (
+                      <li className = {isLogin? 'hidden':"nav-item active"}>
+                        <a class="nav-link" href={path}>{text}><span class="sr-only">(current)</span></a>
+                      </li>
+                    ))}
+                    <li className = {isLogin? "nav-item active":'hidden'}>
+                      <Link class="nav-link" to ="/logout"
+                      onClick={onClickLabel} >Log out</Link>
+                    </li>
+            </ul>
+          </div>
+    </nav>
+    
   )
 
 }
