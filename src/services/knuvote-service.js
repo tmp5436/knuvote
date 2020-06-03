@@ -36,7 +36,7 @@ export default class VoteService{
         return this.GetResource(`/api/v1/knuvote/category/stats`);
     }
     getCategories(){
-        return this.GetResource(`/api/v1/knuvote/category/all/?sortBy=1&order=0&sought=&page=0&size=6`);
+        return this.GetResource(`/api/v1/knuvote/category/all/?sortBy=1&order=0&sought=&page=0&size=20`);
     }
     getOneCategory(categoryId){
         return this.GetResource(`/api/v1/knuvote/category/?id=${categoryId}`)
