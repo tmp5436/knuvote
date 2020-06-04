@@ -9,6 +9,13 @@
     padding: .5rem 1rem;
     border-radius: 3px;
   }
+.user {
+  float: left;
+  margin-top: 8px;
+  margin-right: 0px;
+  margin-left: auto;
+  color: blue;
+}
   
   .header ul li:hover {
     background-color: #444;

@@ -23,6 +23,7 @@ const Header = () => {
 
   const onClickLabel = ()=> {
     localStorage.setItem('isLogin',false);
+    localStorage.setItem('email','')
     setIsLogin(false);
   };
     
@@ -31,7 +32,7 @@ const Header = () => {
           <a class="navbar-brand" href="/">
             KNUVote
           </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="true" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
@@ -40,22 +41,20 @@ const Header = () => {
               <li class="nav-item active">
                 <a class="nav-link" href="/category-list"><Link to="/category-list">Votings</Link> <span class="sr-only">(current)</span></a>
               </li>
-    
-              <li class="nav-item active">
-                <a class="nav-link" href="/create-category">Create a categoty <span class="sr-only">(current)</span></a>
-              </li>
               
-                
                     {Object.entries(LINKS).map(([path,text])=>
                     (
                       <li className = {isLogin? 'hidden':"nav-item active"}>
-                        <a class="nav-link" href={path}>{text}><span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href={path}>{text}<span class="sr-only">(current)</span></a>
+                        
                       </li>
                     ))}
                     <li className = {isLogin? "nav-item active":'hidden'}>
                       <Link class="nav-link" to ="/logout"
                       onClick={onClickLabel} >Log out</Link>
+                      
                     </li>
+                    <li className = "user">{localStorage.getItem('email') === 'undefined' ? '' : localStorage.getItem('email')}</li>
             </ul>
           </div>
     </nav>

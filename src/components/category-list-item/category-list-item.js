@@ -11,16 +11,16 @@ export default class CategotyListItem extends Component{
         const time = expiration_time.slice(0,10);
         return(
             
-                <>
+                <div>
                     <td className="column100 column1" data-column="column1">
-                            <Link to="/candidate-list"
+                            <Link to={`/candidate-list/${id}`}
                             onClick = {onCategoryClick}
                             >{name } </Link> 
                     </td>
                     <td className="column100 column2" data-column="column2">
                             {time}    
                     </td>
-                </>   
+                </div>   
         );
     };
 }

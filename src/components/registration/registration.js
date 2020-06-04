@@ -3,22 +3,39 @@ import './registration.css';
 import VoteService from '../../services/knuvote-service';
 import QueryString from 'query-string';
 import logo from './images/signup-image.jpg';
+import { Redirect } from 'react-router';
 
 export default class Registration extends  Component{
     state = {
        username: '',
        email: '' ,
-       password: ''
+       password: '',
+       str:'',
+       check:false
   
     }
 
     obj = new VoteService();
 
-    onSubmit=(e)=>{
+    /*onSubmit=(e)=>{
         e.preventDefault();
-        this.obj.registration(this.state)
-
-    }
+        this.obj.registration(this.state).then((e)=>{
+            
+            if (e.token === undefined || e.message === "Email already in use" || e.message === "Incorrect data"){
+                this.setState({
+                    check:false,
+                    str: e.message
+                }); 
+                
+            }else{
+            this.setState({
+                
+                check: true,  
+                                
+            }); } 
+            
+        })
+    }*/
 
     onChangeEmail =(e) =>{
         this.setState({
@@ -35,12 +52,30 @@ export default class Registration extends  Component{
             password:e.target.value
         });
     };
-    onButtonClick = () =>{
-        this.obj.registration(this.state)
+    onButtonClick = (e) =>{
+        e.preventDefault();
+        this.obj.registration(this.state).then((e)=>{
+            
+            if (e.message === "Email already in use" || e.message === "Incorrect data"){
+                this.setState({
+                    check:false,
+                    str: e.message
+                }); 
+                
+            }else{
+            this.setState({
+                
+                check: true,  
+                                
+            }); } 
+            
+        })
     }
 
     render(){
-        const {username,email,password} =this.state;
+        const {username,email,password,check,str} =this.state;
+
+        const login = check ? <Redirect to = "/login" /> :str;
         return(   
              <div class="main">
                 <section class="signup">
@@ -68,6 +103,8 @@ export default class Registration extends  Component{
                                     id="signup"
                                     onClick={this.onButtonClick} >
                                     Submit</button>
+                                    {login}
+                                    
 
                                 </form>
                             </div>
