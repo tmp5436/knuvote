@@ -38,9 +38,7 @@ const Header = () => {
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 
-              <li class="nav-item active">
-                <a class="nav-link" href="/category-list"><Link to="/category-list">Votings</Link> <span class="sr-only">(current)</span></a>
-              </li>
+
               
                     {Object.entries(LINKS).map(([path,text])=>
                     (
