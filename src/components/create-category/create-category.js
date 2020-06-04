@@ -11,10 +11,12 @@ export default class CreateCategory extends Component{
     
     state = {
         name: '',
-        expiration_time: "",
+        expiration_time: new Date(), 
         startDate: new Date(),
         form_next: false,
-        categoryId:0
+        categoryId:0,
+        err: false,
+        msg: ''
     }
 
     onChangeName =(e) =>{this.setState({name:e.target.value});};
@@ -24,20 +26,26 @@ export default class CreateCategory extends Component{
         e.preventDefault();
         this.obj.createCategory(this.state.name, this.state.expiration_time, localStorage.getItem('token')).then(
             (e)=>{
+                if(e.message === "Incorrect data" || e.message === "Access forbidden"){
+                    this.setState({msg:e.message})   
+                }
+                    else{
+                    localStorage.setItem('catId',e.id);
                     this.setState({
-                        categoryId:e.id,
-                       
-                    })
-                    this.setState(
-                        prevState => {
-                          return {
-                            ...prevState,
-                            form_next:true,
-                        };
-                      }
-                    );
+                        
+                        err:true ,
+                                        
+                    });}
             }
         )
+        
+        this.props.onCategoryClick(this.state.categoryId);
+        
+    }
+    handleClick = e =>{
+        this.onBClick(e);
+        const {onCategoryClick} = this.props;
+        
     }
     handleChange = date => {
         this.setState({
@@ -45,11 +53,14 @@ export default class CreateCategory extends Component{
            startDate: date
         });
       };
+
     onSubmit(e){
         e.preventDefault();
     }
     render(){
-        const {name, expiration_time,form_next,categoryId} = this.state;
+        const {name, err, msg,expiration_time,form_next,categoryId} = this.state;
+        const {onCategoryClick} = this.props;
+        const next =  err ? <Redirect to ="/editing"/> : msg;
         return(
              <div class="limiter">
                 <div class="container-table100">
@@ -70,11 +81,8 @@ export default class CreateCategory extends Component{
                                             <td class="column100 column1" data-column="column1"><input className="form-control"value = {name} onChange={this.onChangeName} ontype="text" placeholder="Name"/></td>                    
                                             <td class="column100 column2" data-column="column2"><DatePicker selected={this.state.startDate} onChange={this.handleChange} placeholder="Date of expiration"/></td>
                                             <td class="column100 column3" data-column="column3"><button class="btn btn-success" type="submit" onClick = {this.onBClick}>Add category</button>
-                                            <Route
-                                                exact
-                                                path="/editing"
-                                                render={() => (form_next ? (<Redirect to="/editing"/>) : 
-                                                <span>error</span>)}/></td>
+                                            </td>
+                                            {next}
                                          
                                     </tr>
                                 </tbody>

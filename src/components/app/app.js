@@ -11,6 +11,7 @@ import ActivateAccount from '../auth';
 import VoteService from '../../services/knuvote-service';
 import CreateCategory from '../create-category';
 import Editing from '../editing';
+import StartPage from '../start-page/startpage';
 
 
 export default class App extends Component {
@@ -29,7 +30,8 @@ export default class App extends Component {
         categoryName:'',
         time: '',
         token:'',
-        isLogin:false
+        isLogin:false,
+        boolasc: false
     }
     componentDidMount=()=>{
         this.updateCategory();
@@ -37,12 +39,6 @@ export default class App extends Component {
             isLogin: localStorage.getItem('isLogin')=== 'true'
         })
     }
-    componentDidUpdate (prevState){
-        if(prevState.arr == this.state.arr){
-            //this.updateCategory();
-        }
-    }
-    
 
     onCategoryClick = (id, name,expiration_time)=>{
         this.setState({               
@@ -51,12 +47,14 @@ export default class App extends Component {
                 time: expiration_time,
                 candidates: []               
         });
- 
+    }
+    onRandomClick = () =>{
+               // <Link to={`/candidate-list/${44}`}> ffffff </Link>
     }
     updateCategory(){
-        this.obj.getCategories().then((e)=>{
+        this.obj.getCategories(this.state.boolasc ? 0 : 1).then((e)=>{
                 this.setState(prevState => ({
-                    arr: [...prevState.arr, ...e]
+                    arr: [ ...e]
                   }));            
             });
            
@@ -67,6 +65,14 @@ export default class App extends Component {
     } 
     getLogout = (uisLogin)=>{
         this.setState({isLogin:uisLogin});
+    }
+    onClickAsc =()=>{
+        this.setState({boolasc:false});
+        this.updateCategory();
+    }
+    onClickDesc= ()=>{
+        this.setState({boolasc:true});
+        this.updateCategory();
     }
     render() {     
         const {arr, candidates,categoryId, categoryName, isLogin, token, time} = this.state;
@@ -79,22 +85,26 @@ export default class App extends Component {
                     <HeaderPanel isLogin = {isLogin}/>
                     <Switch>
                     <Route path="/"
-                            render={() => <h2>Welcome to KNU Vote</h2>}
+                            render={() =><StartPage/>}
                             exact />
                     <Route path="/login" render={(()=> <Login getUserData = {this.getUserData}/>) } />
                     <Route path="/registration" component={Registration} />
-                    <Route path="/editing" render={(() => <Editing/>)}/>
+                    <Route path="/editing" render={(() => <Editing categoryId={categoryId}/>)}/>
                     <Route exact path="/category-list">
                     {isLogin ? <Route path="/category-list" render ={(() => <CategoryList arr={arr}
-                    onCategoryClick = {this.onCategoryClick}/>)}/> : <Redirect to ="/login"/>}
+                    onCategoryClick = {this.onCategoryClick}
+                    onClickAsc = {this.onClickAsc}
+                    onClickDesc = {this.onClickDesc}
+                    onRandomClick = {this.onRandomClick}
+                    />)}/> : <Redirect to ="/login"/>}
                     </Route> 
 
-                    <Route path="/candidate-list" render ={(() => <CandidateList 
+                    <Route path="/candidate-list/:id" render ={(() => <CandidateList 
                                                                                  categoryId = {categoryId}
                                                                                  categoryName = {categoryName}
                                                                                  time = {time}/>)}/>
                     <Route path="/auth" render={(() => <ActivateAccount/>)}/>
-                    <Route path="/create-category" render ={(() => <CreateCategory/>)}/>
+                    <Route path="/create-category" render ={(() => <CreateCategory onCategoryClick = {this.onCategoryClick}/>)}/>
                     </Switch>                                              
         </Router>       
     </div>

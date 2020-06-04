@@ -35,8 +35,8 @@ export default class VoteService{
     getStatsCategory(){
         return this.GetResource(`/api/v1/knuvote/category/stats`);
     }
-    getCategories(){
-        return this.GetResource(`/api/v1/knuvote/category/all/?sortBy=1&order=0&sought=&page=0&size=20`);
+    getCategories(asc){
+        return this.GetResource(`/api/v1/knuvote/category/all/?sortBy=1&order=${asc}&sought=&page=0&size=20`);
     }
     getOneCategory(categoryId){
         return this.GetResource(`/api/v1/knuvote/category/?id=${categoryId}`)
@@ -65,7 +65,10 @@ export default class VoteService{
     editCategory (name, id, expiration_time, token){
         return this.SendResource (`/api/v1/knuvote/category/edit/`, {name, id, expiration_time}, token)
     }
-    
-
-
+    socialLogin(name,authToken,email,id,provider){
+        return this.SendResource(`/api/v1/knuvote/user/social-login/`,{name,authToken,id,email,provider})
+    }
+    socialLoginGoogle(name,idToken,email,id,provider){
+        return this.SendResource(`/api/v1/knuvote/user/social-login/`,{name,idToken,id,email,provider})
+    }
 }
