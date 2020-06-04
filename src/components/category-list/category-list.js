@@ -80,9 +80,9 @@ export default class CategoryList extends Component{
                                                     value = {term}
                                                     onChange = {this.onInputChange} /> 
             
-                                                    <button className = "btn btn-secondary" onClick={this.props.onClickAsc}> A-Z </button>
+                                                    <button className = "btn btn-secondary" onClick={this.props.onClickAsc}> Z-A </button>
                                                      
-                                                    <button className = "btn btn-secondary" onClick={this.props.onClickDesc}> Z-A </button>
+                                                    <button className = "btn btn-secondary" onClick={this.props.onClickDesc}> A-Z </button>
 
                                                     
                                                     
