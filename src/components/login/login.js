@@ -107,7 +107,7 @@ export default class Login extends Component{
         fields="name,email,picture"
         onClick = {this.onFacebookClick}
         callback={this.responseFacebook}
-        cssClass='display-flex-center zmdi zmdi-facebook-box'   
+        
         textButton='Login'/>)
 
         let google = (
