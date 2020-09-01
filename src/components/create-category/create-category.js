@@ -82,10 +82,11 @@ export default class CreateCategory extends Component{
                                             <td class="column100 column2" data-column="column2"><DatePicker selected={this.state.startDate} onChange={this.handleChange} placeholder="Date of expiration"/></td>
                                             <td class="column100 column3" data-column="column3"><button class="btn btn-success" type="submit" onClick = {this.onBClick}>Add category</button>
                                             </td>
-                                            {next}
+                                            
                                          
                                     </tr>
                                 </tbody>
+                                {next}
                             </table>
             </form>
                         </div>
